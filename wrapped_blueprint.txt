@@ -1,0 +1,1390 @@
+🎉 FARCASTER 2025 WRAPPED — COMPLETE BLUEPRINT v3.0
+================================================================================
+
+                    SPOTIFY-STYLE • MINIMALIST • PRODUCTION-READY
+
+================================================================================
+                              TABLE OF CONTENTS
+================================================================================
+
+ 1. Executive Summary
+ 2. Core Concept & User Journey
+ 3. Technical Architecture
+ 4. Smart Contract Specification
+ 5. Data Structure & Gas Optimization
+ 6. Rarity System & Calculation
+ 7. Stats Verification & Security
+ 8. NFT Metadata & SVG Generation (Minimalist Design)
+ 9. Royalty System (ERC2981)
+10. Minting Rules & Eligibility
+11. Leaderboard System
+12. Frame Integration (Farcaster)
+13. Economic Model & Sustainability
+14. Deployment Guide
+15. Testing Strategy
+16. Edge Cases & Error Handling
+17. Roadmap & Future Features
+18. Appendix & Resources
+
+
+================================================================================
+1️⃣ EXECUTIVE SUMMARY
+================================================================================
+
+PROJECT: Farcaster 2025 Wrapped
+TAGLINE: Your year on Farcaster, wrapped up in an NFT
+
+WHAT IT IS:
+A Spotify Wrapped-inspired NFT that captures your entire Farcaster year in a 
+minimalist, typography-focused design. No pixel art or external images needed - 
+pure gradients, stats, and your social journey.
+
+KEY FEATURES:
+✅ 1 mint per user per calendar year
+✅ 10 comprehensive stats (casts, likes, replies, engagement, consistency, etc.)
+✅ 5 rarity tiers with dynamic gradient designs (Common → Legendary)
+✅ Fully on-chain SVG (pure typography, no external images)
+✅ 3% perpetual royalties to original minter
+✅ Integrated Farcaster Frame with Wrapped-style presentation
+✅ Gas-optimized for Base L2 (~$0.60 per mint)
+✅ Personality type based on behavior patterns
+
+DESIGN PHILOSOPHY:
+🎨 Minimalist & Typography-Focused (like Spotify Wrapped)
+🎨 No external images or pixel art needed
+🎨 Dynamic gradients based on rarity tier
+🎨 Stats are the hero, not graphics
+🎨 Black background, bold text, vibrant colors
+
+TARGET USERS:
+- Active Farcaster users wanting to showcase their year
+- Social proof seekers wanting on-chain proof of engagement
+- NFT collectors seeking minimalist, utility-focused art
+- Community builders wanting to celebrate their impact
+
+TECHNICAL STACK:
+- Blockchain: Base L2 (Ethereum)
+- Smart Contract: Solidity 0.8.20 (Solady optimized)
+- Backend: Node.js + Express
+- Stats Provider: Neynar API
+- Cache: Redis (leaderboard)
+- Frontend: Farcaster Frame (Frog framework)
+
+
+================================================================================
+2️⃣ CORE CONCEPT & USER JOURNEY
+================================================================================
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                         CONCEPT OVERVIEW                            │
+├─────────────────────────────────────────────────────────────────────┤
+│ Farcaster 2025 Wrapped adalah pengalaman interaktif yang merayakan │
+│ perjalanan sosial user selama 2025 dalam format Wrapped Story.     │
+│                                                                     │
+│ Wrapped mencakup:                                                   │
+│ • 11 slide presentasi (seperti Spotify Wrapped)                    │
+│ • 10 stats komprehensif (casts, time spent, patterns, dll)         │
+│ • Personality type (Community Builder, Influencer, dll)            │
+│ • Rarity tier berdasarkan engagement                               │
+│ • Mintable NFT card dengan desain minimalis                        │
+│ • Shareable ke Farcaster dengan auto-generated cast                │
+└─────────────────────────────────────────────────────────────────────┘
+
+USER JOURNEY:
+
+Step 1: Discovery
+├─ User sees "Get Your 2025 Wrapped!" frame in feed
+├─ Click to open interactive Wrapped experience
+└─ Frame intro: "Wrapped • Farcaster 2025"
+
+Step 2: Wrapped Story (11 Slides)
+├─ Slide 1: Intro with username
+├─ Slide 2: Top stats (casts, likes, engagement)
+├─ Slide 3: Time spent (calculated from activity)
+├─ Slide 4: Engagement explosion (likes, recasts, replies)
+├─ Slide 5: Community impact (followers, connections)
+├─ Slide 6: Activity pattern (best day, peak hour)
+├─ Slide 7: Consistency score (months active)
+├─ Slide 8: Personality type reveal
+├─ Slide 9: Rarity tier reveal
+├─ Slide 10: Achievement unlocked
+└─ Slide 11: NFT card preview + mint CTA
+
+Step 3: NFT Preview
+├─ See minimalist card design
+├─ Black background with gradient accents
+├─ Typography-focused (no images)
+├─ Stats grid layout
+└─ Rarity tier badge with dynamic color
+
+Step 4: Mint Decision
+├─ User click "Mint NFT (0.0005 ETH)"
+├─ See preview of their unique card
+├─ Total cost: ~$2.10 (fee + gas)
+└─ User confirm transaction
+
+Step 5: Minting
+├─ Backend verifies stats + generates signature
+├─ Transaction submitted to Base chain
+├─ Contract mints NFT with minimalist SVG
+└─ ~15 seconds later → success!
+
+Step 6: Share & Celebrate
+├─ See final NFT card
+├─ Auto-generated share text for Farcaster
+├─ Share your Wrapped journey
+├─ Card auto-listed on OpenSea
+└─ Future sales → 3% royalty to minter
+
+WRAPPED STORY THEMES:
+
+Theme 1: "Your Top Stats"
+├─ Focus: Raw numbers
+├─ Visual: Large bold numbers, gradient text
+└─ Message: "You were active!"
+
+Theme 2: "Time Investment"
+├─ Focus: Minutes/hours spent
+├─ Visual: Calculated time display
+└─ Message: "You invested X hours building your presence"
+
+Theme 3: "Community Builder"
+├─ Focus: Connections made
+├─ Visual: Network visualization with numbers
+└─ Message: "You connected with X people"
+
+Theme 4: "Consistency King"
+├─ Focus: Regular activity
+├─ Visual: Monthly bar chart
+└─ Message: "You showed up X/12 months"
+
+Theme 5: "Your Personality"
+├─ Focus: Behavior-based type
+├─ Visual: Gradient card with traits
+└─ Message: "You are a [Personality Type]"
+
+
+================================================================================
+3️⃣ TECHNICAL ARCHITECTURE
+================================================================================
+
+SYSTEM DIAGRAM:
+
+┌─────────────────────────────────────────────────────────────────────┐
+│                       USER (Farcaster App)                          │
+└────────────────────────────┬────────────────────────────────────────┘
+                             │
+                    ┌────────▼─────────┐
+                    │ Wrapped Frame    │
+                    │ (11-Slide Story) │
+                    └────────┬─────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+    ┌─────────▼────────┐    │    ┌─────────▼────────┐
+    │   Backend API    │    │    │  Base Blockchain │
+    │  (Stats + Sign)  │    │    │  (Smart Contract)│
+    └─────────┬────────┘    │    └─────────┬────────┘
+              │             │              │
+    ┌─────────▼────────┐    │              │
+    │   Neynar API     │    │              │
+    │ (Farcaster Stats)│    │              │
+    └──────────────────┘    │              │
+                            │              │
+    ┌─────────▼────────┐    │    ┌─────────▼────────┐
+    │      Redis       │    │    │   OpenSea API    │
+    │  (Leaderboard)   │    │    │  (NFT Indexer)   │
+    └──────────────────┘    │    └──────────────────┘
+                            │
+                    ┌───────▼────────┐
+                    │  User's Wallet │
+                    │ (MetaMask, CB) │
+                    └────────────────┘
+
+DATA FLOW (Wrapped Experience):
+
+[1] User opens Wrapped Frame
+      ↓
+[2] Frame → Backend: GET /api/wrapped/:fid
+      ↓
+[3] Backend → Neynar: Fetch full year stats
+      ↓
+[4] Backend calculates:
+    - Time spent estimate
+    - Activity patterns (best day, peak hour)
+    - Personality type
+    - Rarity tier
+      ↓
+[5] Backend → Frame: Return wrapped data + signature
+      ↓
+[6] Frame displays 11-slide story (user navigates)
+      ↓
+[7] User reaches NFT slide → sees card preview
+      ↓
+[8] User clicks "Mint NFT"
+      ↓
+[9] Frame → Contract: mint() with signature
+      ↓
+[10] Contract:
+     - Verifies signature
+     - Calculates rarity
+     - Generates minimalist SVG
+     - Mints NFT
+      ↓
+[11] Success → show card + share buttons
+      ↓
+[12] User shares to Farcaster with auto-generated text
+
+
+================================================================================
+4️⃣ SMART CONTRACT SPECIFICATION
+================================================================================
+
+CONTRACT: FarcasterWrapped2025.sol
+VERSION: 3.0.0
+LICENSE: MIT
+
+INHERITANCE TREE:
+FarcasterWrapped2025
+├─ ERC721 (from Solady - gas optimized)
+├─ Ownable (from OpenZeppelin)
+└─ IERC2981 (royalty interface)
+
+CONSTANTS:
+┌──────────────────────────────────────────────────────────────┐
+│ Name             │ Type             │ Value                  │
+├──────────────────────────────────────────────────────────────┤
+│ MINT_FEE         │ uint256 constant │ 0.0005 ether           │
+│ ROYALTY_BPS      │ uint16 constant  │ 300 (3%)               │
+│ YEAR             │ uint16 constant  │ 2025                   │
+└──────────────────────────────────────────────────────────────┘
+
+STATE VARIABLES:
+┌──────────────────────────────────────────────────────────────────────┐
+│ Variable          │ Type                      │ Storage Cost         │
+├──────────────────────────────────────────────────────────────────────┤
+│ _wrapped          │ mapping(uint256=>WrappedData)│ 2 slots per token │
+│ _hasMinted        │ mapping(uint32=>bool)     │ 1 slot per FID       │
+│ _nextTokenId      │ uint256                   │ 1 slot (shared)      │
+│ statsOracle       │ address immutable         │ 0 (in bytecode)      │
+└──────────────────────────────────────────────────────────────────────┘
+
+STRUCT: WrappedData (Ultra-Optimized - 2 Storage Slots)
+┌─────────────────────────────────────────────────────────────────┐
+│                         SLOT 1 (256 bits)                       │
+├─────────────────────────────────────────────────────────────────┤
+│ uint32  fid              │ 32 bits  │ Farcaster ID            │
+│ uint16  casts            │ 16 bits  │ Total casts (max 65k)   │
+│ uint16  likes            │ 16 bits  │ Likes received          │
+│ uint16  replies          │ 16 bits  │ Reply count             │
+│ uint16  recasts          │ 16 bits  │ Recast count            │
+│ uint16  followers        │ 16 bits  │ Followers gained        │
+│ uint8   consistency      │ 8 bits   │ Active months (0-12)    │
+│ uint8   rarityTier       │ 8 bits   │ Tier (0-4)              │
+│ uint8   engagementRate   │ 8 bits   │ Rate × 10 (max 255)     │
+│ uint32  mintTimestamp    │ 32 bits  │ Unix timestamp          │
+│ uint32  uniqueInteractors│ 32 bits  │ Unique users engaged    │
+├─────────────────────────────────────────────────────────────────┤
+│                         SLOT 2 (256 bits)                       │
+├─────────────────────────────────────────────────────────────────┤
+│ address minter           │ 160 bits │ Original minter         │
+│ bytes12 usernameHash     │ 96 bits  │ Short username ref      │
+└─────────────────────────────────────────────────────────────────┘
+
+MAIN FUNCTIONS:
+
+function mint(
+    uint32 fid,
+    string calldata username,
+    uint16 casts,
+    uint16 likes,
+    uint16 replies,
+    uint16 recasts,
+    uint16 followers,
+    uint8 consistency,
+    uint32 uniqueInteractors,
+    uint8 engagementRate,
+    bytes calldata signature
+) external payable returns (uint256 tokenId)
+
+Description:
+- Mints Wrapped 2025 NFT
+- Verifies signature from backend
+- Calculates rarity tier
+- Generates minimalist SVG (Spotify style)
+- Stores packed data
+
+Checks:
+- require(msg.value == MINT_FEE)
+- require(!_hasMinted[fid])
+- require(consistency <= 12)
+- require(verifySignature(hash, signature))
+
+Gas: ~150,000
+
+
+function tokenURI(uint256 tokenId)
+    public view override returns (string memory)
+
+Description:
+- Generates metadata + minimalist SVG
+- Pure typography design (no images)
+- Dynamic gradients based on rarity
+- Returns data URI format
+
+SVG Style:
+- Black background (#000000)
+- Gradient based on rarity tier
+- Bold typography (no serifs)
+- Stats grid layout
+- Clean, modern design
+
+Gas: ~80,000 (view only)
+
+
+function getWrappedData(uint256 tokenId)
+    external view returns (WrappedData memory)
+
+Description:
+- Returns full unpacked data
+- For external apps/analytics
+
+Gas: ~3,000 (view only)
+
+
+================================================================================
+5️⃣ DATA STRUCTURE & GAS OPTIMIZATION
+================================================================================
+
+OPTIMIZATION STRATEGY:
+
+Same as original blueprint - achieve ~150k gas per mint through:
+✅ Storage packing (2 slots)
+✅ On-demand SVG generation
+✅ Solady ERC721
+✅ Minimal events
+✅ Immutable variables
+
+NEW: Minimalist SVG saves additional ~10k gas
+- No complex pixel art rendering
+- Pure text + gradients
+- Simpler SVG structure
+- ~60% smaller file size
+
+Total Gas: ~140-150k (slightly better than original)
+
+
+================================================================================
+6️⃣ RARITY SYSTEM & CALCULATION
+================================================================================
+
+FORMULA (Enhanced for Wrapped):
+
+RarityScore = 
+  (Casts / 1000) × 10 +              // Max 10 pts
+  (Likes / 5000) × 20 +               // Max 20 pts
+  (Replies / 500) × 12 +              // Max 12 pts
+  (Recasts / 500) × 12 +              // Max 12 pts
+  (Followers / 200) × 8 +             // Max 8 pts
+  (Consistency / 12) × 20 +           // Max 20 pts (highest weight)
+  (UniqueInteractors / 300) × 18      // Max 18 pts
+
+Total: 100 points maximum
+
+TIER MAPPING:
+
+┌────────────────────────────────────────────────────────────────┐
+│ Tier       │ Score  │ Color   │ %    │ Personality            │
+├────────────────────────────────────────────────────────────────┤
+│ Legendary  │ 85-100 │ #FFD700 │  ~5% │ Elite Community Leader │
+│ Epic       │ 70-84  │ #9B59B6 │ ~10% │ Power User             │
+│ Rare       │ 50-69  │ #3498DB │ ~20% │ Active Contributor     │
+│ Uncommon   │ 30-49  │ #2ECC71 │ ~30% │ Regular Member         │
+│ Common     │  0-29  │ #95A5A6 │ ~35% │ Casual Explorer        │
+└────────────────────────────────────────────────────────────────┘
+
+PERSONALITY TYPES (Based on behavior):
+
+Community Builder:
+├─ High unique interactors (>250)
+├─ Balanced casts/replies ratio
+└─ Strong consistency (10+/12)
+
+Content Creator:
+├─ High casts (>800)
+├─ High likes per cast (>10)
+└─ Moderate consistency (7+/12)
+
+Conversation Starter:
+├─ High replies (>400)
+├─ High engagement rate (>18%)
+└─ Active discussions
+
+Curator/Amplifier:
+├─ High recasts (>500)
+├─ Moderate own content
+└─ Supports community
+
+Casual Explorer:
+├─ Low overall stats
+├─ Inconsistent activity
+└─ Still part of community
+
+
+================================================================================
+7️⃣ STATS VERIFICATION & SECURITY
+================================================================================
+
+(Same as original blueprint)
+
+SECURITY MODEL:
+✅ Backend signature verification (trusted oracle)
+✅ Timestamp-bound signatures (10 min expiry)
+✅ On-chain FID verification
+✅ Rate limiting on backend
+✅ One mint per FID enforcement
+
+
+================================================================================
+8️⃣ NFT METADATA & SVG GENERATION (MINIMALIST DESIGN)
+================================================================================
+
+METADATA STRUCTURE:
+
+{
+  "name": "Farcaster Wrapped 2025 #42",
+  "description": "Your 2025 journey on Farcaster, wrapped up in stats and style.",
+  "image": "data:image/svg+xml;base64,PHN2ZyB4bWxu...",
+  "external_url": "https://wrapped.farcaster.xyz/42",
+  "attributes": [
+    {"trait_type": "Year", "value": 2025},
+    {"trait_type": "FID", "value": 12345},
+    {"trait_type": "Username", "value": "cryptoartist"},
+    {"trait_type": "Casts", "value": 954, "display_type": "number"},
+    {"trait_type": "Likes Received", "value": 12044, "display_type": "number"},
+    {"trait_type": "Engagement Rate", "value": 24.8, "display_type": "number"},
+    {"trait_type": "Consistency", "value": "11/12"},
+    {"trait_type": "Unique Connections", "value": 287, "display_type": "number"},
+    {"trait_type": "Rarity Tier", "value": "Legendary"},
+    {"trait_type": "Rarity Score", "value": 92, "max_value": 100},
+    {"trait_type": "Personality Type", "value": "Community Builder"}
+  ]
+}
+
+SVG GENERATION (Minimalist Spotify Style):
+
+function _generateSVG(
+    uint256 tokenId,
+    WrappedData memory data
+) internal view returns (string memory) {
+    string memory rarityColor = _getRarityColor(data.rarityTier);
+    string memory username = _getUsername(tokenId, data);
+    
+    return string(abi.encodePacked(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" style="background:#000">',
+        
+        // Gradient background
+        '<defs>',
+          '<linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">',
+            '<stop offset="0%" style="stop-color:', rarityColor, ';stop-opacity:0.8"/>',
+            '<stop offset="100%" style="stop-color:#000;stop-opacity:1"/>',
+          '</linearGradient>',
+        '</defs>',
+        
+        '<rect width="400" height="600" fill="url(#g)"/>',
+        
+        // Header
+        '<text x="40" y="60" fill="rgba(255,255,255,0.6)" font-size="12" font-weight="600" letter-spacing="2">FARCASTER</text>',
+        '<text x="40" y="85" fill="#fff" font-size="32" font-weight="900">2025</text>',
+        
+        // Trophy Icon (simple circle)
+        '<circle cx="350" cy="70" r="24" fill="', rarityColor, '" opacity="0.3"/>',
+        '<text x="350" y="78" text-anchor="middle" font-size="20">🏆</text>',
+        
+        // Username
+        '<text x="40" y="150" fill="#fff" font-size="36" font-weight="900">@', username, '</text>',
+        '<text x="40" y="175" fill="rgba(255,255,255,0.5)" font-size="12">FID ', Strings.toString(data.fid), '</text>',
+        
+        // Stats Grid
+        _generateStatsGrid(data, rarityColor),
+        
+        // Rarity Badge
+        '<rect x="40" y="470" width="320" height="80" rx="12" fill="', rarityColor, '" opacity="0.15"/>',
+        '<text x="60" y="500" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600" letter-spacing="2">TIER</text>',
+        '<text x="60" y="530" fill="', rarityColor, '" font-size="32" font-weight="900">', _getRarityName(data.rarityTier), '</text>',
+        '<text x="340" y="500" text-anchor="end" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600" letter-spacing="2">SCORE</text>',
+        '<text x="340" y="530" text-anchor="end" fill="#fff" font-size="32" font-weight="900">', _getRarityScore(data), '/100</text>',
+        
+        // Footer
+        '<text x="200" y="580" text-anchor="middle" fill="rgba(255,255,255,0.3)" font-size="10">Edition #', Strings.toString(data.fid), ' • Minted 2025</text>',
+        
+        '</svg>'
+    ));
+}
+
+function _generateStatsGrid(
+    WrappedData memory data,
+    string memory accentColor
+) internal pure returns (string memory) {
+    return string(abi.encodePacked(
+        // Row 1
+        '<rect x="40" y="210" width="150" height="70" rx="8" fill="rgba(255,255,255,0.05)"/>',
+        '<text x="55" y="235" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600" letter-spacing="1">CASTS</text>',
+        '<text x="55" y="265" fill="#fff" font-size="24" font-weight="900">', Strings.toString(data.casts), '</text>',
+        
+        '<rect x="210" y="210" width="150" height="70" rx="8" fill="rgba(255,255,255,0.05)"/>',
+        '<text x="225" y="235" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600" letter-spacing="1">LIKES</text>',
+        '<text x="225" y="265" fill="#fff" font-size="24" font-weight="900">', Strings.toString(data.likes), '</text>',
+        
+        // Row 2
+        '<rect x="40" y="295" width="150" height="70" rx="8" fill="rgba(255,255,255,0.05)"/>',
+        '<text x="55" y="320" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600" letter-spacing="1">ENGAGEMENT</text>',
+        '<text x="55" y="350" fill="#fff" font-size="24" font-weight="900">', Strings.toString(data.engagementRate / 10), '.', Strings.toString(data.engagementRate % 10), '%</text>',
+        
+        '<rect x="210" y="295" width="150" height="70" rx="8" fill="rgba(255,255,255,0.05)"/>',
+        '<text x="225" y="320" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600" letter-spacing="1">ACTIVE</text>',
+        '<text x="225" y="350" fill="#fff" font-size="24" font-weight="900">', Strings.toString(data.consistency), '/12</text>',
+        
+        // Row 3
+        '<rect x="40" y="380" width="150" height="70" rx="8" fill="rgba(255,255,255,0.05)"/>',
+        '<text x="55" y="405" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600" letter-spacing="1">REPLIES</text>',
+        '<text x="55" y="435" fill="#fff" font-size="24" font-weight="900">', Strings.toString(data.replies), '</text>',
+        
+        '<rect x="210" y="380" width="150" height="70" rx="8" fill="rgba(255,255,255,0.05)"/>',
+        '<text x="225" y="405" fill="rgba(255,255,255,0.6)" font-size="10" font-weight="600" letter-spacing="1">CONNECTIONS</text>',
+        '<text x="225" y="435" fill="#fff" font-size="24" font-weight="900">', Strings.toString(data.uniqueInteractors), '</text>'
+    ));
+}
+
+DESIGN FEATURES:
+
+✅ Pure Typography - no images, no pixel art
+✅ Black Background (#000) - premium feel
+✅ Dynamic Gradients - based on rarity tier
+✅ Stats Grid - 6 key metrics in clean layout
+✅ Minimalist Icons - emoji/simple shapes only
+✅ Bold Numbers - stats are the hero
+✅ Subtle Backgrounds - translucent cards
+✅ Color Coding - tier colors for emphasis
+
+SVG SIZE: ~2-3KB (vs 5-8KB with pixel art)
+Gas Savings: ~10,000 additional gas saved
+
+
+================================================================================
+9️⃣ ROYALTY SYSTEM (ERC2981)
+================================================================================
+
+(Same as original blueprint)
+
+3% perpetual royalties to original minter
+Automatically enforced on OpenSea, Blur, LooksRare
+
+
+================================================================================
+🔟 MINTING RULES & ELIGIBILITY
+================================================================================
+
+CORE RULES:
+
+Rule 1: ONE MINT PER FID (2025 only)
+├─ Each FID can mint exactly 1 Wrapped 2025 NFT
+├─ No multiple mints allowed
+└─ Check: require(!_hasMinted[fid])
+
+Rule 2: FULL YEAR STATS
+├─ Stats calculated: Jan 1, 2025 → Dec 31, 2025
+├─ OR: Account creation date → mint date (if < 1 year)
+└─ Minimum 30 days of activity recommended
+
+Rule 3: MINTING WINDOW
+├─ Opens: January 1, 2026 00:00 UTC
+├─ Closes: December 31, 2026 23:59 UTC
+└─ Miss the window? Wait for Wrapped 2026
+
+Rule 4: MINT FEE
+├─ Must pay exactly 0.0005 ETH
+├─ Gas paid separately
+└─ Fee supports project operations
+
+Rule 5: VERIFIED STATS
+├─ Stats signed by backend oracle
+├─ Signature valid for 10 minutes
+└─ Cannot fake or manipulate stats
+
+
+================================================================================
+1️⃣1️⃣ LEADERBOARD SYSTEM
+================================================================================
+
+CATEGORIES:
+
+1. 🏆 Top Overall Score (rarity score)
+2. 📊 Most Casts
+3. ❤️ Most Likes Received
+4. 💬 Highest Engagement Rate
+5. 🔥 Perfect Consistency (12/12)
+6. 👥 Most Connections (unique interactors)
+7. ⭐ Legendary Club (all Legendary tier holders)
+
+REDIS OPERATIONS:
+
+// Add to leaderboard
+await redis.zadd('wrapped:2025:overall', rarityScore, `fid:${fid}`);
+
+// Get top 100
+const top100 = await redis.zrevrange('wrapped:2025:overall', 0, 99, 'WITHSCORES');
+
+// Get user rank
+const rank = await redis.zrevrank('wrapped:2025:overall', `fid:${fid}`);
+
+
+================================================================================
+1️⃣2️⃣ FRAME INTEGRATION (FARCASTER)
+================================================================================
+
+WRAPPED STORY FLOW (11 Slides):
+
+Slide 1: INTRO
+├─ "Wrapped • Farcaster 2025"
+├─ Username display
+└─ Button: "Let's Go →"
+
+Slide 2: TOP STATS
+├─ Large numbers: Casts, Likes, Engagement
+├─ Gradient backgrounds per stat
+└─ Button: "Next →"
+
+Slide 3: TIME SPENT
+├─ "You spent X hours on Farcaster"
+├─ Breakdown: hours, days, avg per day
+└─ Button: "Keep Going →"
+
+Slide 4: ENGAGEMENT
+├─ "Your content got X engagements"
+├─ Grid: Likes, Recasts, Replies
+└─ Button: "Show Me More →"
+
+Slide 5: COMMUNITY
+├─ "You connected with X people"
+├─ Followers + Unique interactors
+└─ Button: "Continue →"
+
+Slide 6: PATTERNS
+├─ "Your most active: Thursday, 9 PM"
+├─ Best day + peak hour
+└─ Button: "What Else? →"
+
+Slide 7: CONSISTENCY
+├─ "You were active X/12 months"
+├─ Bar visualization
+└─ Button: "Almost There →"
+
+Slide 8: PERSONALITY
+├─ "You are a Community Builder"
+├─ Traits list
+└─ Button: "Show My Tier →"
+
+Slide 9: RARITY TIER
+├─ "LEGENDARY" (big reveal)
+├─ Score display (92/100)
+├─ Top X% message
+└─ Button: "Claim My NFT →"
+
+Slide 10: ACHIEVEMENT
+├─ "Achievement Unlocked: Top 5% Creator"
+├─ Stats summary
+└─ Button: "Mint NFT →"
+
+Slide 11: NFT PREVIEW
+├─ Show minimalist card design
+├─ Mint button (0.0005 ETH)
+├─ "Share to Farcaster"
+└─ Complete journey
+
+FRAME METADATA (Frog Framework):
+
+```typescript
+import { Frog } from 'frog';
+import { handle } from 'frog/vercel';
+
+export const app = new Frog({
+  title: 'Farcaster 2025 Wrapped',
+  imageAspectRatio: '1:1',
+});
+
+app.frame('/', (c) => {
+  return c.res({
+    image: '/intro.png',
+    intents: [
+      <Button action="/stats">Get My Wrapped 🎉</Button>,
+    ],
+  });
+});
+
+app.frame('/stats', async (c) => {
+  const fid = c.frameData?.fid;
+  const stats = await fetchWrappedStats(fid);
+  
+  return c.res({
+    image: `/wrapped/${fid}/slide-2`,
+    intents: [
+      <Button action="/slide-3">Next →</Button>,
+    ],
+  });
+});
+
+// ... 11 total routes
+```
+
+SHARE TEXT TEMPLATE:
+
+"I just got my Farcaster 2025 Wrapped! 🎉
+
+✨ {TIER} Tier ({SCORE}/100)
+📊 {CASTS} casts • {LIKES} likes
+🔥 {CONSISTENCY}/12 months active
+👥 {CONNECTIONS} connections
+🏆 {ACHIEVEMENT}
+
+Get yours → [frame-url]"
+
+
+================================================================================
+1️⃣3️⃣ ECONOMIC MODEL & SUSTAINABILITY
+================================================================================
+
+COST STRUCTURE (Updated):
+
+Monthly Operating Costs:
+┌────────────────────────────────────────────────────────────────┐
+│ Service               │ Plan              │ Cost/Month         │
+├────────────────────────────────────────────────────────────────┤
+│ Backend Hosting       │ Railway Pro       │ $20                │
+│ Redis Cache           │ Upstash Pro       │ $10                │
+│ Neynar API            │ Growth            │ $50                │
+│ Domain & CDN          │ Vercel Pro        │ $20                │
+│ Frame Assets          │ Cloudflare R2     │ $5                 │
+├────────────────────────────────────────────────────────────────┤
+│ TOTAL                 │                   │ ~$105/month        │
+└────────────────────────────────────────────────────────────────┘
+
+REVENUE MODEL:
+
+One-Time Minting Window (2025 Wrapped):
+├─ Minting period: Jan 1, 2026 → Dec 31, 2026
+├─ Target: 10,000 mints
+├─ Revenue: 10,000 × $1.50 = $15,000
+├─ Annual costs: $105 × 12 = $1,260
+├─ Net profit: $13,740
+└─ Sustainability: Year 1 fully funds operations
+
+Recurring Revenue (Secondary Sales):
+├─ No direct revenue (goes to original minters)
+├─ Benefits ecosystem through trading activity
+└─ Builds brand value for future years
+
+YEARLY CADENCE:
+
+2025 → Wrapped 2025 (mints Jan-Dec 2026)
+2026 → Wrapped 2026 (mints Jan-Dec 2027)
+2027 → Wrapped 2027 (mints Jan-Dec 2028)
+...
+
+Each year is a separate NFT collection with its own stats and design evolution.
+
+
+================================================================================
+1️⃣4️⃣ DEPLOYMENT GUIDE
+================================================================================
+
+PHASE 1: SMART CONTRACT (November 2025)
+
+1. Develop & Test Contract:
+```bash
+npx hardhat init
+npm install @solady/src/tokens/ERC721.sol
+```
+
+2. Write Tests:
+```javascript
+describe("FarcasterWrapped2025", () => {
+  it("Should mint with valid stats", async () => {
+    const sig = await oracle.signMessage(hash);
+    await wrapped.mint(fid, username, ...stats, sig, {value: MINT_FEE});
+    expect(await wrapped.ownerOf(1)).to.equal(minter.address);
+  });
+  
+  it("Should reject double mint", async () => {
+    await wrapped.mint(...);
+    await expect(wrapped.mint(...)).to.be.revertedWith("Already minted");
+  });
+  
+  it("Should generate minimalist SVG", async () => {
+    const uri = await wrapped.tokenURI(1);
+    expect(uri).to.include("data:image/svg+xml");
+    expect(uri).to.include("FARCASTER");
+    expect(uri).to.include("2025");
+  });
+});
+```
+
+3. Deploy to Base:
+```bash
+npx hardhat run scripts/deploy.js --network base
+npx hardhat verify --network base DEPLOYED_ADDRESS
+```
+
+Cost: ~$30-40
+
+PHASE 2: BACKEND API (December 2025)
+
+1. Setup Express API:
+```javascript
+// server.js
+const express = require('express');
+const { NeynarAPIClient } = require('@neynar/nodejs-sdk');
+
+const app = express();
+const neynar = new NeynarAPIClient(process.env.NEYNAR_API_KEY);
+
+// Get wrapped stats for FID
+app.get('/api/wrapped/:fid', async (req, res) => {
+  const { fid } = req.params;
+  
+  // Fetch full year stats
+  const stats = await fetchWrappedStats(fid);
+  
+  // Calculate personality
+  const personality = calculatePersonality(stats);
+  
+  // Generate signature
+  const signature = await generateSignature(fid, stats);
+  
+  res.json({
+    stats,
+    personality,
+    signature,
+    rarityTier: calculateRarity(stats),
+    wrappedData: {
+      slides: generateSlideData(stats)
+    }
+  });
+});
+
+app.listen(3000);
+```
+
+2. Deploy to Railway:
+```bash
+railway init
+railway up
+```
+
+Cost: $20/month
+
+PHASE 3: WRAPPED FRAME (December 2025)
+
+1. Create Frog Frame:
+```typescript
+// app/api/[[...routes]]/route.tsx
+import { Frog, Button } from 'frog';
+
+export const app = new Frog({
+  title: 'Farcaster 2025 Wrapped',
+  basePath: '/api',
+});
+
+// 11 frame routes for story
+app.frame('/', ...);
+app.frame('/slide-2', ...);
+app.frame('/slide-3', ...);
+// ... up to slide 11
+
+export const GET = handle(app);
+export const POST = handle(app);
+```
+
+2. Deploy to Vercel:
+```bash
+vercel --prod
+```
+
+Cost: $20/month
+
+PHASE 4: LAUNCH (January 1, 2026)
+
+Launch Timeline:
+├─ Dec 15, 2025: Soft launch (beta testers)
+├─ Dec 25, 2025: Marketing campaign begins
+├─ Jan 1, 2026: Public launch
+├─ Jan 7, 2026: First 1,000 mints milestone
+└─ Dec 31, 2026: Minting window closes
+
+Marketing Strategy:
+1. Partner with Farcaster influencers
+2. Create demo Wrapped for popular accounts
+3. Daily leaderboard updates
+4. Personality type memes
+5. Rarity tier badges in profiles
+
+
+================================================================================
+1️⃣5️⃣ TESTING STRATEGY
+================================================================================
+
+UNIT TESTS:
+
+```javascript
+describe("Wrapped SVG Generation", () => {
+  it("Should generate black background", async () => {
+    const svg = await wrapped.tokenURI(1);
+    expect(svg).to.include('background:#000');
+  });
+  
+  it("Should include username", async () => {
+    const svg = await wrapped.tokenURI(1);
+    expect(svg).to.include('@cryptoartist');
+  });
+  
+  it("Should show rarity tier", async () => {
+    const svg = await wrapped.tokenURI(1);
+    expect(svg).to.include('LEGENDARY');
+  });
+  
+  it("Should display stats grid", async () => {
+    const svg = await wrapped.tokenURI(1);
+    expect(svg).to.include('CASTS');
+    expect(svg).to.include('LIKES');
+    expect(svg).to.include('ENGAGEMENT');
+  });
+  
+  it("Should use tier-specific gradient", async () => {
+    const svg = await wrapped.tokenURI(1);
+    expect(svg).to.include('#FFD700'); // Legendary gold
+  });
+});
+
+describe("Personality Calculation", () => {
+  it("Should identify Community Builder", () => {
+    const stats = {
+      casts: 800,
+      replies: 450,
+      uniqueInteractors: 280,
+      consistency: 12
+    };
+    expect(calculatePersonality(stats)).to.equal("Community Builder");
+  });
+  
+  it("Should identify Content Creator", () => {
+    const stats = {
+      casts: 1200,
+      likes: 8000,
+      avgLikesPerCast: 15,
+      replies: 200
+    };
+    expect(calculatePersonality(stats)).to.equal("Content Creator");
+  });
+});
+```
+
+INTEGRATION TESTS:
+
+```javascript
+describe("End-to-End Minting", () => {
+  it("Should complete full wrapped flow", async () => {
+    // 1. Fetch stats from backend
+    const response = await fetch(`/api/wrapped/${fid}`);
+    const { stats, signature } = await response.json();
+    
+    // 2. Mint NFT
+    const tx = await wrapped.mint(fid, username, ...stats, signature, {
+      value: ethers.parseEther("0.0005")
+    });
+    await tx.wait();
+    
+    // 3. Verify NFT exists
+    const owner = await wrapped.ownerOf(1);
+    expect(owner).to.equal(minter.address);
+    
+    // 4. Check metadata
+    const uri = await wrapped.tokenURI(1);
+    expect(uri).to.include("Farcaster Wrapped 2025");
+  });
+});
+```
+
+VISUAL TESTS:
+
+Create test SVG outputs for all 5 tiers:
+```bash
+node scripts/generateTestSVGs.js
+# Output: test-common.svg, test-uncommon.svg, etc.
+# Manually verify design quality
+```
+
+
+================================================================================
+1️⃣6️⃣ EDGE CASES & ERROR HANDLING
+================================================================================
+
+EDGE CASES:
+
+1. NEW USER (< 1 year on Farcaster)
+   └─ Use partial year stats
+   └─ Likely Common tier
+   └─ Still mintable
+
+2. INACTIVE USER (0 casts in 2025)
+   └─ All stats = 0
+   └─ Common tier with 0 score
+   └─ Can still mint as "participation trophy"
+
+3. DELETED/BANNED ACCOUNT
+   └─ Neynar returns 404
+   └─ Cannot mint
+   └─ Show error: "Account not found"
+
+4. USERNAME CHANGE
+   └─ NFT shows username at mint time
+   └─ Creates collectible vintage value
+   └─ Not updated retroactively
+
+5. EXTREME STATS (> uint16 max)
+   └─ Cap at 65,535
+   └─ Still gets max points for that metric
+   └─ Won't affect rarity calculation
+
+6. SIGNATURE EXPIRY
+   └─ Valid for 10 minutes only
+   └─ User must refresh if expired
+   └─ Show error: "Stats expired, please refresh"
+
+7. GAS PRICE SPIKE
+   └─ Show current gas estimate
+   └─ Warn if > $5 total
+   └─ Suggest waiting for lower gas
+
+8. DUPLICATE MINT ATTEMPT
+   └─ Check _hasMinted[fid] on-chain
+   └─ Show: "You already minted your 2025 Wrapped!"
+   └─ Link to existing NFT
+
+ERROR MESSAGES:
+
+```javascript
+const ERRORS = {
+  ALREADY_MINTED: {
+    title: "Already Wrapped!",
+    message: "You already minted your 2025 Wrapped NFT.",
+    action: "View Your NFT"
+  },
+  INVALID_SIGNATURE: {
+    title: "Verification Failed",
+    message: "Stats could not be verified. Please try again.",
+    action: "Refresh Stats"
+  },
+  INSUFFICIENT_FUNDS: {
+    title: "Insufficient Balance",
+    message: "You need at least 0.0005 ETH + gas to mint.",
+    action: "Add Funds"
+  },
+  ACCOUNT_NOT_FOUND: {
+    title: "Account Not Found",
+    message: "We couldn't find your Farcaster account.",
+    action: "Contact Support"
+  }
+};
+```
+
+
+================================================================================
+1️⃣7️⃣ ROADMAP & FUTURE FEATURES
+================================================================================
+
+PHASE 1: LAUNCH (Q1 2026) ✅
+✅ Deploy smart contract
+✅ Launch Wrapped 2025 experience
+✅ 11-slide interactive story
+✅ Minimalist NFT design
+✅ Leaderboards
+✅ Share to Farcaster
+
+PHASE 2: ENGAGEMENT (Q2 2026)
+🔲 Personality-based achievements
+🔲 Wrapped galleries (showcase all tiers)
+🔲 Comparison tool (compare with friends)
+🔲 Wrapped Hall of Fame (top 100)
+🔲 Community voting (favorite Wrapped)
+🔲 Physical prints (ship IRL cards)
+
+PHASE 3: UTILITY (Q3 2026)
+🔲 Wrapped-gated channels
+🔲 Tier-based perks (Legendary = special access)
+🔲 Trading marketplace (P2P swaps)
+🔲 Wrapped staking (lock for benefits)
+🔲 Dynamic traits (update with achievements)
+🔲 Wrapped evolution (add 2026 stats)
+
+PHASE 4: EXPANSION (Q4 2026)
+🔲 Wrapped 2026 planning
+🔲 Multi-year comparison tool
+🔲 Historical archives
+🔲 Developer API (build on Wrapped data)
+🔲 Mobile app (native experience)
+🔲 Other protocol integrations
+
+YEARLY EVOLUTION:
+
+2025 Wrapped (Minimalist Black):
+├─ Pure typography
+├─ Black background
+├─ Single-year stats
+└─ 5 tiers
+
+2026 Wrapped (Dark Mode Plus):
+├─ Enhanced gradients
+├─ Year-over-year comparison
+├─ Growth percentages
+└─ 6 tiers (add Mythic)
+
+2027 Wrapped (Premium):
+├─ Animated SVG elements
+├─ Multi-year timeline
+├─ Achievement badges
+└─ Dynamic rarity
+
+
+================================================================================
+1️⃣8️⃣ APPENDIX & RESOURCES
+================================================================================
+
+KEY LINKS:
+
+Documentation:
+├─ Farcaster Docs: https://docs.farcaster.xyz
+├─ Neynar API: https://docs.neynar.com
+├─ Frog Framework: https://frog.fm
+├─ Base Chain: https://docs.base.org
+├─ Solady: https://github.com/Vectorized/solady
+└─ OpenSea: https://docs.opensea.io
+
+Design Inspiration:
+├─ Spotify Wrapped: https://newsroom.spotify.com/wrapped
+├─ Dune Analytics: https://dune.com
+├─ GitHub Skyline: https://skyline.github.com
+└─ Year in Review trends
+
+Tools:
+├─ SVG Preview: https://svgviewer.dev
+├─ Base Scanner: https://basescan.org
+├─ Frame Validator: https://warpcast.com/~/developers/frames
+└─ Gas Estimator: https://l2fees.info
+
+ENVIRONMENT VARIABLES:
+
+```bash
+# Smart Contract
+CONTRACT_ADDRESS=0x...
+DEPLOYER_PRIVATE_KEY=0x...
+STATS_ORACLE_PRIVATE_KEY=0x...
+
+# Backend
+NEYNAR_API_KEY=neynar_...
+REDIS_URL=redis://...
+PORT=3000
+
+# Frontend
+NEXT_PUBLIC_CONTRACT_ADDRESS=0x...
+NEXT_PUBLIC_BASE_RPC=https://mainnet.base.org
+NEXT_PUBLIC_BACKEND_URL=https://api.wrapped.xyz
+```
+
+TECH STACK SUMMARY:
+
+Frontend: 
+├─ Frog (Farcaster Frames)
+├─ Next.js 14
+├─ Vercel Edge Functions
+└─ Tailwind CSS
+
+Backend:
+├─ Node.js + Express
+├─ Neynar SDK
+├─ Redis (caching + leaderboards)
+├─ ethers.js (signature generation)
+└─ Railway (hosting)
+
+Blockchain:
+├─ Base L2
+├─ Solidity 0.8.20
+├─ Solady (optimized ERC721)
+└─ Hardhat (development)
+
+COST BREAKDOWN:
+
+Development:
+├─ Smart Contract: $30 (one-time)
+├─ Testing: $20 (testnet gas)
+├─ Audit (optional): $5,000-10,000
+└─ Design: DIY (minimalist, no designer needed)
+
+Monthly Operations:
+├─ Backend: $20 (Railway)
+├─ Cache: $10 (Upstash Redis)
+├─ API: $50 (Neynar)
+├─ Frontend: $20 (Vercel)
+├─ Assets: $5 (Cloudflare R2)
+└─ Total: ~$105/month
+
+Revenue Projections:
+
+Conservative (5,000 mints):
+├─ Revenue: $7,500
+├─ Annual costs: $1,260
+├─ Net: $6,240
+└─ ROI: 495%
+
+Moderate (10,000 mints):
+├─ Revenue: $15,000
+├─ Annual costs: $1,260
+├─ Net: $13,740
+└─ ROI: 1,090%
+
+Optimistic (20,000 mints):
+├─ Revenue: $30,000
+├─ Annual costs: $1,260
+├─ Net: $28,740
+└─ ROI: 2,281%
+
+DEPLOYMENT TIMELINE:
+
+November 2025:
+├─ Week 1-2: Smart contract development
+├─ Week 3: Backend API development
+└─ Week 4: Frame development
+
+December 2025:
+├─ Week 1: Integration testing
+├─ Week 2: Security audit (optional)
+├─ Week 3: Beta testing (100 users)
+└─ Week 4: Marketing campaign launch
+
+January 1, 2026:
+├─ 🚀 PUBLIC LAUNCH
+├─ Day 1: Monitor for issues
+├─ Week 1: First 1,000 mints
+└─ Month 1: Optimize based on feedback
+
+Throughout 2026:
+├─ Monthly: Release leaderboard updates
+├─ Quarterly: Add new features
+└─ December 31: Close minting window
+
+
+================================================================================
+                              DESIGN SHOWCASE
+================================================================================
+
+MINIMALIST NFT CARD SPECS:
+
+Dimensions: 400×600px (SVG)
+Background: #000000 (pure black)
+Primary Text: #FFFFFF (pure white)
+Secondary Text: rgba(255,255,255,0.6) (60% white)
+
+Rarity Colors:
+├─ Legendary: #FFD700 (gold)
+├─ Epic: #9B59B6 (purple)
+├─ Rare: #3498DB (blue)
+├─ Uncommon: #2ECC71 (green)
+└─ Common: #95A5A6 (gray)
+
+Typography:
+├─ Headers: 32-36px, weight 900
+├─ Stats: 24px, weight 900
+├─ Labels: 10-12px, weight 600, uppercase
+└─ Body: 12px, weight 400
+
+Layout:
+├─ Padding: 40px all sides
+├─ Grid: 2 columns, 3 rows
+├─ Spacing: 15px gaps
+└─ Border radius: 8-12px on cards
+
+Key Elements:
+1. Header (Farcaster 2025)
+2. Trophy icon (tier-colored)
+3. Username (large, bold)
+4. Stats grid (6 metrics)
+5. Rarity badge (gradient background)
+6. Edition number footer
+
+SVG Optimization:
+├─ No external fonts (system fallbacks)
+├─ No images (pure SVG shapes)
+├─ Minimal gradients (1-2 per card)
+├─ Size: ~2-3KB (vs 8KB+ with images)
+└─ Fully on-chain compatible
+
+
+================================================================================
+                              SUCCESS METRICS
+================================================================================
+
+Year 1 Targets (2025 Wrapped):
+┌────────────────────────────────────────────────────────────────┐
+│ Metric                    │ Target        │ Stretch Goal      │
+├────────────────────────────────────────────────────────────────┤
+│ Total Mints               │ 10,000        │ 20,000            │
+│ Unique Minters            │ 8,000         │ 18,000            │
+│ Revenue                   │ $15,000       │ $30,000           │
+│ Secondary Volume          │ $50,000       │ $150,000          │
+│ Avg Mint Time             │ <3 days       │ <24 hours         │
+│ User Satisfaction         │ 4.5/5         │ 4.8/5             │
+│ Frame Impressions         │ 500,000       │ 1,000,000         │
+│ Social Shares             │ 5,000         │ 15,000            │
+└────────────────────────────────────────────────────────────────┘
+
+Quality Metrics:
+├─ Gas cost: <$0.70 per mint
+├─ API response: <500ms
+├─ Frame load time: <2s
+├─ SVG render time: <100ms
+├─ Uptime: >99.9%
+├─ Error rate: <0.1%
+└─ Support tickets: <50/month
+
+
+================================================================================
+                              END OF BLUEPRINT
+================================================================================
+
+Version: 3.0 - Farcaster 2025 Wrapped Edition
+Theme: Spotify Wrapped-Inspired Minimalist Design
+Updated: November 30, 2025
+Status: Ready for Implementation
+
+🎨 DESIGN: Pure typography, no images, black background, dynamic gradients
+🎯 TARGET: 10,000+ mints in 2026
+💰 ECONOMICS: $15K revenue, $1.2K costs, 1,090% ROI
+⚡ TECHNICAL: 140k gas, fully on-chain SVG, Base L2
+🚀 TIMELINE: Launch January 1, 2026
+
+Key Differentiators:
+✅ Spotify Wrapped aesthetic (vs trading card style)
+✅ Pure CSS/SVG design (vs pixel art)
+✅ Personality types (vs just stats)
+✅ 11-slide story experience (vs static view)
+✅ Year-specific collection (vs ongoing series)
+✅ Minimalist premium feel (vs busy graphics)
+
+This blueprint is ready for a developer to implement a production-ready
+Farcaster 2025 Wrapped NFT experience that celebrates users' social journey
+in a beautiful, minimalist, and fully on-chain format.
+
+Repository: github.com/yourproject/farcaster-wrapped-2025
+
+Let's make 2025 unforgettable! 🎉
+
+================================================================================
